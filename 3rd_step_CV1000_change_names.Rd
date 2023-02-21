@@ -8,7 +8,7 @@ tab <- mutate(tab, TiffNames = paste("W", W, ".tif", sep=""))
 tab2 <- subset(tab, ,c(NewNames, TiffNames))
 tab2 <- unique(tab2)
 
-setwd("hyperstack")
+setwd("Image/hyperstack")
 file.rename(tab2$TiffNames, tab2$NewNames)
 
 
