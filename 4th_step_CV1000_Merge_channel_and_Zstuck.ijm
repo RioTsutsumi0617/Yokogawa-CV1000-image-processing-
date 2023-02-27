@@ -1,5 +1,11 @@
-dir1 = getDirectory("Choose the folder to Open:");
-dir2 = getDirectory("Choose the folder to save:");
+//dir1 = getDirectory("Choose the folder to Open:");
+//dir2 = getDirectory("Choose the folder to save:");
+Folder = getDir("Choose a Directory");
+dir1 = Folder + "hyperstack" + File.separator;
+dir2 = Folder + "merge" + File.separator;
+if (!File.exists(dir2)) {
+File.makeDirectory(dir2);
+}
 
 filelist = getFileList(dir1);
 
