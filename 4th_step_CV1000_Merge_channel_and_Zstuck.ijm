@@ -9,6 +9,8 @@ File.makeDirectory(dir2);
 
 filelist = getFileList(dir1);
 
+setBatchMode("hide");
+
 for (i = 0; i < lengthOf(filelist); i++) {
     if (endsWith(filelist[i], ".tif")) {
     	if (
