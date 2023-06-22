@@ -9,6 +9,8 @@ dir7 = "/Volumes/G-DRIVE Thunderbolt 3/CV1000/20221215_combined/";
 
 close("*");
 
+setBatchMode("hide");
+
 if (File.exists(dir7) == 0) {
 	File.makeDirectory(dir7);	
 }
