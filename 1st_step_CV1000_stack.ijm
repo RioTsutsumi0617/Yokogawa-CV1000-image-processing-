@@ -1,4 +1,4 @@
-dir = getDir("Choose a Directory");
+dir = getDir("Choose a Directory (choose image folder not the parent)");
 ImageFolder = dir + "hyperstack" + File.separator;
 if (!File.exists(ImageFolder)) {
 File.makeDirectory(ImageFolder);
