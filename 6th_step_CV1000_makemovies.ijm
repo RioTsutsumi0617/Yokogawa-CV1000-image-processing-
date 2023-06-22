@@ -4,6 +4,8 @@ Speed = getNumber("Frame/sec", 10);
 name = split(dir1, File.separator);
 name = name[lengthOf(name)-1];
 filelist = getFileList(dir1);
+
+setBatchMode("hide");
 	
 for (i = 0; i < lengthOf(filelist); i++) {
     if (endsWith(filelist[i], ".tif")) {
