@@ -20,7 +20,7 @@ File.makeDirectory(ImageFolder);
 
 setBatchMode("hide");
 
-for ( w = 2; w <= Well; w++) {
+for ( w = 1; w <= Well; w++) {
 	if ( Tile == 1 ) {
 	File.openSequence(dir + "image" + File.separator, "virtual filter=(W" + w +  "F.*)" );
 	filename = ImageFolder + "W" + w + ".tif";
