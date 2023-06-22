@@ -124,5 +124,9 @@ for ( w = 1; w <= Well; w++) {
 		File.delete(ImageFolder + "W" + w + "F017.tif");
 		File.delete(ImageFolder + "W" + w + "F018.tif");
 		}
+<<<<<<< Updated upstream
 	}
 }
+=======
+}
+>>>>>>> Stashed changes
