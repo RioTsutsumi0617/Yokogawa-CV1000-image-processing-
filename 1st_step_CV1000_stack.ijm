@@ -1,19 +1,21 @@
-dir = getDir("Choose a Directory (choose image folder not the parent)");
+dir = getDir("Choose a Directory");
 ImageFolder = dir + "hyperstack" + File.separator;
 if (!File.exists(ImageFolder)) {
 File.makeDirectory(ImageFolder);
 }
 
-  Well=1; Tile=1;Ch=2; Slice=1;Timeframe=1;
+  Well=1; Tile=1;Fmax = 1; Ch=2; Slice=1;Timeframe=1;
   Dialog.create("Input data structure");
   Dialog.addNumber("# of Wells:", Well);
-  Dialog.addNumber("# of Tiles (1, 4, 9, or 18(9*2)):", Tile);
+  Dialog.addNumber("# of Tiles (1 or 4):", Tile);
+  Dialog.addNumber("# of fields:", Fmax);
   Dialog.addNumber("# of channels:", Ch);
   Dialog.addNumber("# of Slices:", Slice);
   Dialog.addNumber("# of Time frames:", Timeframe);
   Dialog.show();
   Well = Dialog.getNumber();
   Tile = Dialog.getNumber();
+  Fmax = Dialog.getNumber();
   Ch = Dialog.getNumber();
   Slice = Dialog.getNumber();
   Timeframe = Dialog.getNumber();
@@ -22,12 +24,14 @@ setBatchMode("hide");
 
 for ( w = 1; w <= Well; w++) {
 	if ( Tile == 1 ) {
-	File.openSequence(dir + "image" + File.separator, "virtual filter=(W" + w +  "F.*)" );
-	filename = ImageFolder + "W" + w + ".tif";
+	for ( f = 1; f <= Fmax; f++) {
+	File.openSequence(dir + "image" + File.separator, "virtual filter=(W" + w + "F00" + f + ".*)" );
+	filename = ImageFolder + "W" + w + "F00" + f + ".tif";
 	run("Stack to Hyperstack...", "order=xyczt(default) channels=" + Ch + " slices=" + Slice + " frames=" + Timeframe + " display=Grayscale");
 	run("Hyperstack to Stack");
 	saveAs("Tiff",filename);
 	close("*");
+	}
 	}
 	
 	if ( Tile == 4 ) {	
