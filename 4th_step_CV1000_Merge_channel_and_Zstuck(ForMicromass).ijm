@@ -27,6 +27,7 @@ for (i = 0; i < lengthOf(filelist); i++) {
 		call("ij.ImagePlus.setDefault16bitRange", 16);
 		Stack.setChannel(3);
 		run("Grays");
+		setMinAndMax(0, 65535);
 		Stack.setActiveChannels("110");
 		run("Make Composite");
 		run("RGB Color", "slices frames keep");
