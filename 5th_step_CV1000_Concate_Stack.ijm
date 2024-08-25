@@ -1,5 +1,5 @@
-dir1 = "/Volumes/G-DRIVE Thunderbolt 3/CV1000/20221215T012125/merge";
-dir2 = "/Volumes/G-DRIVE Thunderbolt 3/CV1000/20221215T205140/merge";
+dir1 = "/Volumes/G-DRIVE Thunderbolt 3/CV1000/20221215T012125/Image/merge";
+dir2 = "/Volumes/G-DRIVE Thunderbolt 3/CV1000/20221215T205140/Image/merge";
 //dir3 = "/Volumes/G-DRIVE Thunderbolt 3/CV1000/20210609T235911/Zprojected_AllStack";
 //dir4 = "/Volumes/G-DRIVE Thunderbolt 3/CV1000/20210813T193105/Zprojected_AllStack";
 //dir5 = "/Volumes/G-DRIVE Thunderbolt 3/CV1000/20210815T194102/Zprojected_AllStack";
