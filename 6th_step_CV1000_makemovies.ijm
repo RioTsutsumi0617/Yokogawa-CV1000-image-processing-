@@ -1,5 +1,5 @@
 dir1 = getDirectory("Choose the folder to Open:");
-Speed = getNumber("Frame/sec", 10);
+Speed = getNumber("Frame/sec", 20);
 
 name = split(dir1, File.separator);
 name = name[lengthOf(name)-1];
