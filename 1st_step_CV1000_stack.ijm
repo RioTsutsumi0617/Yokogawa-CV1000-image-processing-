@@ -34,31 +34,54 @@ for ( w = 1; w <= Well; w++) {
 	}
 	}
 	
-	if ( Tile == 4 ) {	
-		for ( f = 1; f <= Tile; f++) {
-		File.openSequence(dir + "image" + File.separator, "virtual filter=(W" + w + "F00" + f + ".*)" );
-		filename = ImageFolder + "W" + w + "F00" + f + ".tif";
-		run("Stack to Hyperstack...", "order=xyczt(default) channels=" + Ch + " slices=" + Slice + " frames=" + Timeframe + " display=Grayscale");
-		run("Hyperstack to Stack");
-		saveAs("Tiff",filename);
-		close("*");
-		}
-			Config = "Config";
-			Table.create(Config);
-			Table.set("dim = 3", 0,  "W" + w + "F001.tif ; ; (0, 0, 0)", Config);
-			Table.set("dim = 3", 1,  "W" + w + "F002.tif ; ; (512, 0, 0)", Config);
-			Table.set("dim = 3", 2,  "W" + w + "F003.tif ; ; (0, 512, 0)", Config);
-			Table.set("dim = 3", 3,  "W" + w + "F004.tif ; ; (512, 512, 0)", Config);
-			Table.save(ImageFolder + "TileConfiguration.txt", Config);
-			run("Grid/Collection stitching", "type=[Positions from file] order=[Defined by TileConfiguration] directory=[&ImageFolder] layout_file=TileConfiguration.txt fusion_method=[Linear Blending] regression_threshold=0.30 max/avg_displacement_threshold=2.50 absolute_displacement_threshold=3.50 computation_parameters=[Save memory (but be slower)] image_output=[Fuse and display]");
-			saveAs("Tiff", ImageFolder + "W" + w);
-			close("*");
-			File.delete(ImageFolder + "W" + w + "F001.tif");
-			File.delete(ImageFolder + "W" + w + "F002.tif");
-			File.delete(ImageFolder + "W" + w + "F003.tif");
-			File.delete(ImageFolder + "W" + w + "F004.tif");
-	}
-	
+	if (Tile == 4) {
+	fieldGroup = 1;
+        for (f = 1; f <= Fmax; f += 4) {
+            // Process fields in groups of 4
+            for (fieldIndex = 0; fieldIndex < 4; fieldIndex++) {
+                currentField = f + fieldIndex;
+                if (currentField <= Fmax) {
+                	fieldNumber = d2s(currentField, 0); // Convert number to string
+              		if (currentField < 10) {
+                		fieldNumber = "00" + fieldNumber;
+				} else if (currentField < 100) {
+                        		fieldNumber = "0" + fieldNumber;
+                    		}
+	                File.openSequence(dir + "image" + File.separator, "virtual filter=(W" + w + "F" + fieldNumber + ".*)" );
+	                filename = ImageFolder + "W" + w + "F00" + currentField + ".tif";
+	                run("Stack to Hyperstack...", "order=xyczt(default) channels=" + Ch + " slices=" + Slice + " frames=" + Timeframe + " display=Grayscale");
+	                run("Hyperstack to Stack");
+	                saveAs("Tiff", filename);
+	                close("*");
+	                }
+	            }
+            
+	            // Create tile configuration for stitching
+	            Config = "Config";
+	            Table.create(Config);
+	            Table.set("dim = 3", 0, "W" + w + "F00" + f + ".tif ; ; (0, 0, 0)", Config);
+	            Table.set("dim = 3", 1, "W" + w + "F00" + (f + 1) + ".tif ; ; (512, 0, 0)", Config);
+	            Table.set("dim = 3", 2, "W" + w + "F00" + (f + 2) + ".tif ; ; (0, 512, 0)", Config);
+	            Table.set("dim = 3", 3, "W" + w + "F00" + (f + 3) + ".tif ; ; (512, 512, 0)", Config);
+	            Table.save(ImageFolder + "TileConfiguration.txt", Config);
+	            
+	            // Perform stitching
+	            run("Grid/Collection stitching", "type=[Positions from file] order=[Defined by TileConfiguration] directory=[&ImageFolder] layout_file=TileConfiguration.txt fusion_method=[Linear Blending] regression_threshold=0.30 max/avg_displacement_threshold=2.50 absolute_displacement_threshold=3.50 computation_parameters=[Save memory (but be slower)] image_output=[Fuse and display]");
+	            saveAs("Tiff", ImageFolder + "W" + w + "S" + fieldGroup); // Save stitched image as WwSfieldGroup.tif
+	            close("*");
+
+            // Delete individual fields after stitching
+	            for (fieldIndex = 0; fieldIndex < 4; fieldIndex++) {
+    	            currentField = f + fieldIndex;
+	                if (currentField <= Fmax) {
+                    File.delete(ImageFolder + "W" + w + "F00" + currentField + ".tif");
+                	}
+            	}
+            
+            	fieldGroup++;
+        	}
+    	}
+	}	
 	if ( Tile == 9 || Tile == 18 ) {	
 	for ( f = 1; f <= 9; f++) {
 	File.openSequence(dir + "image" + File.separator, "virtual filter=(W" + w + "F00" + f + ".*)" );
