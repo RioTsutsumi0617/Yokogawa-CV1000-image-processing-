@@ -17,14 +17,16 @@ for (i = 0; i < lengthOf(filelist); i++) {
 		File.exists(dir1 + File.separator + filelist[i])==1 
     	 ) { 
 		open(dir1 + File.separator + filelist[i]);
-		setMinAndMax(0, 65535);
 		call("ij.ImagePlus.setDefault16bitRange", 16);
 		Stack.setChannel(1);
 		run("Green");
+		setMinAndMax(4000, 11500);
 		Stack.setChannel(2);
 		run("Magenta");
+		setMinAndMax(0, 65535);
 		Stack.setChannel(3);
 		run("Grays");
+		setMinAndMax(0, 65535);
 		run("Make Composite");
 		run("RGB Color", "slices frames keep");
 		run("Z Project...", "projection=[Max Intensity] all");
