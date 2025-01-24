@@ -88,7 +88,7 @@ for (w = 1; w <= Well; w++) {
                 Table.save(ImageFolder + "TileConfiguration.txt", Config);
 
                 run("Grid/Collection stitching", "type=[Positions from file] order=[Defined by TileConfiguration] directory=[" + ImageFolder + "] layout_file=TileConfiguration.txt fusion_method=[Linear Blending] regression_threshold=0.30 max/avg_displacement_threshold=2.50 absolute_displacement_threshold=3.50 computation_parameters=[Save memory (but be slower)] image_output=[Fuse and display]");
-                saveAs("Tiff", ImageFolder + "W" + w + "F00" + fieldGroup); // Save stitched image
+                saveAs("Tiff", ImageFolder + "W" + w + "ROI00" + fieldGroup); // Save stitched image
                 close("*");
 
                 // Delete individual fields after stitching
